@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Yoklama Sistemi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .student {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px #ccc;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    #yoklar {
+      font-weight: bold;
+      color: red;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📋 E-Yoklama Sistemi</h1>
+  <div class="list" id="studentList"></div>
+  <button class="btn" onclick="yoklamaKaydet()">📌 Yoklamayı Kaydet</button>
+  <div id="yoklar"></div>
+
+  <script>
+    const ogrenciler = Array.from({ length: 30 }, (_, i) => `Öğrenci ${i + 1}`);
+
+    const studentList = document.getElementById("studentList");
+
+    ogrenciler.forEach((isim, index) => {
+      const label = document.createElement("label");
+      label.className = "student";
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = `ogrenci-${index}`;
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(isim));
+      studentList.appendChild(label);
+    });
+
+    function yoklamaKaydet() {
+      const yokOlanlar = [];
+      ogrenciler.forEach((isim, index) => {
+        const checkbox = document.getElementById(`ogrenci-${index}`);
+        if (!checkbox.checked) {
+          yokOlanlar.push(isim);
+        }
+      });
+
+      const yoklarDiv = document.getElementById("yoklar");
+      if (yokOlanlar.length === 0) {
+        yoklarDiv.textContent = "👏 Herkes gelmiş, yoklama tam!";
+      } else {
+        yoklarDiv.innerHTML = "❌ Yok Olanlar: <br>" + yokOlanlar.join(", ");
+      }
+    }
+  </script>
+</body>
+</html>
